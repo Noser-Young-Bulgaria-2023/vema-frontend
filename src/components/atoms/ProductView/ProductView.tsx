@@ -1,19 +1,22 @@
-import { Box, Card, CardMedia, Grid, Paper, Typography } from "@mui/material";
+import {
+  Box,
+  Card,
+  CardMedia,
+  Grid,
+  IconButton,
+  Paper,
+  Typography,
+} from "@mui/material";
 import { Product } from "../../../types/models/Product.model";
-import styled from "styled-components";
 import ProductViewStyles from "./ProductViewStyles";
+import AddIcon from "@mui/icons-material/Add";
 
 type ProductViewProps = {
   product?: Product;
+  openNewProduct: () => void;
 };
 
-const StyledProductView = styled.div.attrs(() => ({}))`
-  background-color: green;
-  width: 350px;
-  height: 350px;
-`;
-
-const ProductView = ({ product }: ProductViewProps) => {
+const ProductView = ({ product, openNewProduct }: ProductViewProps) => {
   return (
     <Grid item>
       <Paper sx={ProductViewStyles.paper}>
@@ -32,6 +35,11 @@ const ProductView = ({ product }: ProductViewProps) => {
               {product.name}
             </Typography>
           </Box>
+        )}
+        {!product && (
+          <IconButton onClick={openNewProduct}>
+            <AddIcon className="addIcon" sx={ProductViewStyles.addIcon} />
+          </IconButton>
         )}
       </Paper>
     </Grid>

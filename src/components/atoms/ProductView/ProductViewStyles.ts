@@ -14,10 +14,16 @@ const paper: SxProps = {
   "&:hover .hoverText": {
     display: "block",
   },
+  "&:hover .addIcon": {
+    color: "white",
+  },
 };
 
 const content: SxProps = {
   zIndex: 10,
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
 };
 
 const hoverText: SxProps = {
@@ -40,10 +46,23 @@ const backgroundGradient: SxProps = {
   transition: "opacity 0.5s",
 };
 
+const addIcon: SxProps = {
+  fontSize: "5rem",
+  transition: "color 0.5s",
+  zIndex: 1,
+};
+
 const image: CSSProperties = {
   height: "200px",
   width: "200px",
   objectFit: "contain",
 };
 
-export default { paper, content, hoverText, backgroundGradient, image };
+export default {
+  paper,
+  content,
+  hoverText,
+  backgroundGradient,
+  addIcon,
+  image,
+};

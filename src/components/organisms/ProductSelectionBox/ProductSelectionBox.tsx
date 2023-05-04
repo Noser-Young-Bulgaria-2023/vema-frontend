@@ -2,14 +2,19 @@ import React, { useEffect, useState } from "react";
 import { Product } from "../../../types/models/Product.model";
 import ProductView from "../../atoms/ProductView/ProductView";
 import { Grid, Typography } from "@mui/material";
+import ProductSelectionBoxStyles from "./ProductSelectionBoxStyles";
 
 type ProductSelectionBoxProps = {
   productList: Product[];
+  openNewProduct: () => void;
 };
 
 const MAX_PRODUCTS_SHOWN = 10;
 
-const ProductSelectionBox = ({ productList }: ProductSelectionBoxProps) => {
+const ProductSelectionBox = ({
+  productList,
+  openNewProduct,
+}: ProductSelectionBoxProps) => {
   const [filledProductList, setFilledProductList] = useState(productList);
 
   useEffect(() => {
@@ -21,15 +26,21 @@ const ProductSelectionBox = ({ productList }: ProductSelectionBoxProps) => {
   }, [productList]);
 
   return (
-    <div>
+    <>
       <Typography variant="h2">Select a product</Typography>
 
-      <Grid container spacing={0}>
+      <Grid container spacing={0} sx={ProductSelectionBoxStyles.container}>
         {filledProductList.map((product, index) => {
-          return <ProductView key={index} product={product} />;
+          return (
+            <ProductView
+              key={index}
+              product={product}
+              openNewProduct={openNewProduct}
+            />
+          );
         })}
       </Grid>
-    </div>
+    </>
   );
 };
 
