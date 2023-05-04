@@ -1,6 +1,14 @@
 import { createRoot } from "react-dom/client";
-import Hello from "./Hello";
+import React = require("react");
+import { BrowserRouter } from "react-router-dom";
+import App from "./App";
 
 const container = document.getElementById("root");
 const root = createRoot(container);
-root.render(<Hello />);
+root.render(
+  <React.StrictMode>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </React.StrictMode>
+);

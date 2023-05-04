@@ -1,0 +1,50 @@
+[
+    {
+        "id": "1",
+        "name": "Coca-Cola",
+        "price": 2.49,
+        "imagePath": "https://i.pinimg.com/originals/b5/a1/4a/b5a14a691f0966e510e85220f8392cee.png"
+    },
+    {
+        "id": "2",
+        "name": "Coca-Cola",
+        "price": 2.49,
+        "imagePath": "https://i.pinimg.com/originals/b5/a1/4a/b5a14a691f0966e510e85220f8392cee.png"
+    },
+    {
+        "id": "3",
+        "name": "Coca-Cola",
+        "price": 2.49,
+        "imagePath": "https://i.pinimg.com/originals/b5/a1/4a/b5a14a691f0966e510e85220f8392cee.png"
+    },
+    {
+        "id": "4",
+        "name": "Coca-Cola",
+        "price": 2.49,
+        "imagePath": "https://i.pinimg.com/originals/b5/a1/4a/b5a14a691f0966e510e85220f8392cee.png"
+    },
+    {
+        "id": "5",
+        "name": "Coca-Cola",
+        "price": 2.49,
+        "imagePath": "https://i.pinimg.com/originals/b5/a1/4a/b5a14a691f0966e510e85220f8392cee.png"
+    },
+    {
+        "id": "6",
+        "name": "Coca-Cola",
+        "price": 2.49,
+        "imagePath": "https://i.pinimg.com/originals/b5/a1/4a/b5a14a691f0966e510e85220f8392cee.png"
+    },
+    {
+        "id": "7",
+        "name": "Coca-Cola",
+        "price": 2.49,
+        "imagePath": "https://i.pinimg.com/originals/b5/a1/4a/b5a14a691f0966e510e85220f8392cee.png"
+    },
+    {
+        "id": "8",
+        "name": "Pepsi",
+        "price": 2.49,
+        "imagePath": "https://purepng.com/public/uploads/large/pepsi-bottle-wet-ss3.png"
+    }
+]
