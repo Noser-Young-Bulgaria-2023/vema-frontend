@@ -1,28 +1,48 @@
+import {
+  Box,
+  Card,
+  CardMedia,
+  Grid,
+  IconButton,
+  Paper,
+  Typography,
+} from "@mui/material";
 import { Product } from "../../../types/models/Product.model";
-import styled from "styled-components";
+import ProductViewStyles from "./ProductViewStyles";
+import AddIcon from "@mui/icons-material/Add";
 
 type ProductViewProps = {
-  product: Product;
+  product?: Product;
+  openNewProduct: () => void;
 };
 
-const StyledProductView = styled.div.attrs(() => ({}))`
-  background-color: green;
-  width: 350px;
-  height: 350px;
-`;
-
-const ProductView = ({ product }: ProductViewProps) => {
+const ProductView = ({ product, openNewProduct }: ProductViewProps) => {
   return (
-    <>
-      <StyledProductView>
-        <img
-          src={product.imagePath}
-          alt=""
-          style={{ height: "250px", width: "250px", objectFit: "contain" }}
-        />
-        <p>{product.name}</p>
-      </StyledProductView>
-    </>
+    <Grid item>
+      <Paper sx={ProductViewStyles.paper}>
+        <Box
+          className="backgroundGradient"
+          sx={ProductViewStyles.backgroundGradient}
+        ></Box>
+        {product && (
+          <Box sx={ProductViewStyles.content}>
+            <img
+              src={product.imagePath}
+              alt={product.name}
+              style={ProductViewStyles.image}
+            />
+            <Typography className="hoverText" sx={ProductViewStyles.hoverText}>
+              {product.name}
+            </Typography>
+          </Box>
+        )}
+        {!product && (
+          <IconButton onClick={openNewProduct}>
+            <AddIcon className="addIcon" sx={ProductViewStyles.addIcon} />
+          </IconButton>
+        )}
+      </Paper>
+    </Grid>
   );
 };
 
