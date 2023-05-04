@@ -1,8 +1,10 @@
+import { Box, Card, CardMedia, Grid, Paper, Typography } from "@mui/material";
 import { Product } from "../../../types/models/Product.model";
 import styled from "styled-components";
+import ProductViewStyles from "./ProductViewStyles";
 
 type ProductViewProps = {
-  product: Product;
+  product?: Product;
 };
 
 const StyledProductView = styled.div.attrs(() => ({}))`
@@ -13,16 +15,26 @@ const StyledProductView = styled.div.attrs(() => ({}))`
 
 const ProductView = ({ product }: ProductViewProps) => {
   return (
-    <>
-      <StyledProductView>
-        <img
-          src={product.imagePath}
-          alt=""
-          style={{ height: "250px", width: "250px", objectFit: "contain" }}
-        />
-        <p>{product.name}</p>
-      </StyledProductView>
-    </>
+    <Grid item>
+      <Paper sx={ProductViewStyles.paper}>
+        <Box
+          className="backgroundGradient"
+          sx={ProductViewStyles.backgroundGradient}
+        ></Box>
+        {product && (
+          <Box sx={ProductViewStyles.content}>
+            <img
+              src={product.imagePath}
+              alt={product.name}
+              style={ProductViewStyles.image}
+            />
+            <Typography className="hoverText" sx={ProductViewStyles.hoverText}>
+              {product.name}
+            </Typography>
+          </Box>
+        )}
+      </Paper>
+    </Grid>
   );
 };
 

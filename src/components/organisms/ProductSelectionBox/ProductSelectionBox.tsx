@@ -1,24 +1,34 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Product } from "../../../types/models/Product.model";
 import ProductView from "../../atoms/ProductView/ProductView";
-import styled from "styled-components";
+import { Grid, Typography } from "@mui/material";
 
 type ProductSelectionBoxProps = {
   productList: Product[];
 };
 
-const ProductListBox = styled.div``;
+const MAX_PRODUCTS_SHOWN = 10;
 
 const ProductSelectionBox = ({ productList }: ProductSelectionBoxProps) => {
+  const [filledProductList, setFilledProductList] = useState(productList);
+
+  useEffect(() => {
+    setFilledProductList(() => {
+      return productList.concat(
+        new Array(MAX_PRODUCTS_SHOWN - productList.length).fill(null)
+      );
+    });
+  }, [productList]);
+
   return (
     <div>
-      <h2>Select a product</h2>
+      <Typography variant="h2">Select a product</Typography>
 
-      <ProductListBox className="grid grid-cols-5 gap-0">
-        {productList.map((product, index) => {
+      <Grid container spacing={0}>
+        {filledProductList.map((product, index) => {
           return <ProductView key={index} product={product} />;
         })}
-      </ProductListBox>
+      </Grid>
     </div>
   );
 };
