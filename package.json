@@ -4,8 +4,13 @@
   "description": "",
   "main": "index.tsx",
   "scripts": {
+<<<<<<< Updated upstream
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --mode production",
+=======
+    "test": "echo \"Error: no test specified\" && exit 0",
+    "build": "webpack",
+>>>>>>> Stashed changes
     "start": "webpack serve --mode development"
   },
   "keywords": [],
