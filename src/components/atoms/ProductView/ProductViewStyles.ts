@@ -11,12 +11,6 @@ const paper: SxProps = {
   "&:hover .backgroundGradient": {
     opacity: 1,
   },
-  "&:hover .hoverText": {
-    display: "block",
-  },
-  "&:hover .addIcon": {
-    color: "white",
-  },
 };
 
 const content: SxProps = {
@@ -27,11 +21,10 @@ const content: SxProps = {
 };
 
 const hoverText: SxProps = {
-  display: "none",
-  color: "white",
   textAlign: "center",
   padding: 1,
   fontSize: "2.5rem",
+  color: "white",
 };
 
 const backgroundGradient: SxProps = {
