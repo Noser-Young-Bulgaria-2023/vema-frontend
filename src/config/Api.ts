@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosInstance } from "axios";
+import axios, { AxiosInstance } from "axios";
 
 /**
  * isDev returns a boolean if the application is running in development-mode.
@@ -8,7 +8,7 @@ import axios, { AxiosError, AxiosInstance } from "axios";
  * Create an Axios instance for the api.
  */
 const createAPI = (): AxiosInstance => {
-  return axios.create({ baseURL: "http://localhost:8080" });
+  return axios.create({ baseURL: "/api/v1" });
 };
 
 /**
