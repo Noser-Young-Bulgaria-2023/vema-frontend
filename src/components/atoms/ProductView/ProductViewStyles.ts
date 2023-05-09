@@ -42,7 +42,7 @@ const backgroundGradient: SxProps = {
 const addIcon: SxProps = {
   fontSize: "5rem",
   transition: "color 0.5s",
-  zIndex: 1,
+  zIndex: 10,
 };
 
 const image: CSSProperties = {
