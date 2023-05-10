@@ -8,7 +8,7 @@ import axios, { AxiosInstance } from "axios";
  * Create an Axios instance for the api.
  */
 const createAPI = (): AxiosInstance => {
-  return axios.create({ baseURL: "localhost:8080/api/v1" });
+  return axios.create({ baseURL: "http://localhost:8080/api/v1" });
 };
 
 /**
