@@ -15,9 +15,15 @@ const ProductView = ({ product, openNewProduct }: ProductViewProps) => {
   return (
     <Grid item>
       <Paper
-        sx={ProductViewStyles.paper}
+        sx={{
+          ...ProductViewStyles.paper,
+          transform: showHoverText ? "translateY(-10%) scale(1.2) " : undefined,
+        }}
         onMouseEnter={() => setShowHoverText(true)}
         onMouseLeave={() => setShowHoverText(false)}
+        variant="outlined"
+        elevation={showHoverText ? 24 : undefined}
+        square
       >
         <Box
           className="backgroundGradient"
