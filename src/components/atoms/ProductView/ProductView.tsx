@@ -6,11 +6,13 @@ import { useState } from "react";
 
 type ProductViewProps = {
   product?: Product;
-  openNewProduct: () => void;
+  openNewProduct: (product: Product | undefined) => void;
 };
 
 const ProductView = ({ product, openNewProduct }: ProductViewProps) => {
   const [showHoverText, setShowHoverText] = useState(false);
+
+  console.log(product)
 
   return (
     <Grid item>
@@ -32,7 +34,7 @@ const ProductView = ({ product, openNewProduct }: ProductViewProps) => {
         {product && (
           <Box sx={ProductViewStyles.content}>
             <img
-              src={product.imagePath}
+              src={`data:image/png;base64,${product.image.data}`}
               alt={product.name}
               style={ProductViewStyles.image}
             />
@@ -44,7 +46,7 @@ const ProductView = ({ product, openNewProduct }: ProductViewProps) => {
           </Box>
         )}
         {!product && (
-          <IconButton onClick={openNewProduct}>
+          <IconButton onClick={() => openNewProduct(undefined)}>
             <AddIcon
               sx={{
                 ...ProductViewStyles.addIcon,

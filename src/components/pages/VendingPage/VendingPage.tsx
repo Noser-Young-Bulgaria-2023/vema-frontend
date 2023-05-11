@@ -1,7 +1,7 @@
 import { useLayoutEffect, useState } from "react";
 import { Product } from "../../../types/models/Product.model";
 import ProductSelectionBox from "../../organisms/ProductSelectionBox/ProductSelectionBox";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Dialog } from "@mui/material";
 import VendingPageStyles from "./VendingPageStyles";
 import ProductService from "../../../services/ProductService";
 
@@ -15,7 +15,7 @@ const VendingPage = () => {
     });
   }, []);
 
-  const handleNewProduct = () => {
+  const handleNewProduct = (product: Product | undefined) => {
     setOpenNewProduct(true);
   };
 
@@ -26,6 +26,9 @@ const VendingPage = () => {
         productList={productList}
         openNewProduct={handleNewProduct}
       />
+      <Dialog open={openNewProduct} onClose={() => setOpenNewProduct(false)}>
+        <Typography variant="h3">Add new product</Typography>
+      </Dialog>
     </Box>
   );
 };

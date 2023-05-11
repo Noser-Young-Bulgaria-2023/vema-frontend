@@ -6,7 +6,7 @@ import ProductSelectionBoxStyles from "./ProductSelectionBoxStyles";
 
 type ProductSelectionBoxProps = {
   productList: Product[];
-  openNewProduct: () => void;
+  openNewProduct: (product: Product | undefined) => void;
 };
 
 const MAX_PRODUCTS_SHOWN = 10;
