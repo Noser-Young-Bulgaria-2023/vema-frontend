@@ -6,14 +6,14 @@ import ProductSelectionBoxStyles from "./ProductSelectionBoxStyles";
 
 type ProductSelectionBoxProps = {
   productList: Product[];
-  openNewProduct: (product: Product | undefined) => void;
+  openProduct: (product: Product | undefined) => void;
 };
 
 const MAX_PRODUCTS_SHOWN = 10;
 
 const ProductSelectionBox = ({
   productList,
-  openNewProduct,
+  openProduct,
 }: ProductSelectionBoxProps) => {
   const [filledProductList, setFilledProductList] = useState(productList);
 
@@ -35,7 +35,7 @@ const ProductSelectionBox = ({
             <ProductView
               key={index}
               product={product}
-              openNewProduct={openNewProduct}
+              openProduct={openProduct}
             />
           );
         })}

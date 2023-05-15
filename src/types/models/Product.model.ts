@@ -1,10 +1,11 @@
 export type Product = {
   id: string;
   name: string;
-  price: number;
+  price: string;
   image: {
     type: number;
     data: string;
   };
+  imageBlob?: Blob;
   amount: number;
 };
