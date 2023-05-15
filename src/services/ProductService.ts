@@ -12,7 +12,7 @@ const ProductService = {
         const bodyFormData = new FormData();
 
         bodyFormData.append('product-image', new Blob([productImage]));
-        bodyFormData.append('product', JSON.stringify(product));
+        bodyFormData.append('product', new Blob([JSON.stringify(product)], { type: "application/json" }));
 
         return api.post('/products', bodyFormData, {
             headers: {
