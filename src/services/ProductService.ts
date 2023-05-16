@@ -1,6 +1,11 @@
 import api from "../config/Api";
 import { Product } from "../types/models/Product.model";
 
+async function urltoFile(url: string) {
+  const res = await fetch(url);
+  return await res.arrayBuffer();
+}
+
 const ProductService = {
   getProduct: async (id: string) => {
     const { data } = await api.get(`/products/${id}`);
@@ -10,10 +15,11 @@ const ProductService = {
     const { data } = await api.get(`/products`);
     return data;
   },
-  saveProduct: async (product: Product) => {
+  saveProduct: async (product: Product, productImageUrl: string) => {
     const bodyFormData = new FormData();
+    const imageFile = await urltoFile(productImageUrl);
 
-    bodyFormData.append("product-image", new Blob([product.imageBlob]));
+    bodyFormData.append("product-image", new Blob([imageFile]));
     bodyFormData.append(
       "product",
       new Blob([JSON.stringify(product)], { type: "application/json" })
@@ -25,10 +31,15 @@ const ProductService = {
       },
     });
   },
-  updateProduct: async (productId: string, product: Product) => {
+  updateProduct: async (
+    productId: string,
+    product: Product,
+    productImageUrl: string
+  ) => {
     const bodyFormData = new FormData();
+    const imageFile = await urltoFile(productImageUrl);
 
-    bodyFormData.append("product-image", new Blob([product.imageBlob]));
+    bodyFormData.append("product-image", new Blob([imageFile]));
     bodyFormData.append(
       "product",
       new Blob([JSON.stringify(product)], { type: "application/json" })
@@ -39,6 +50,9 @@ const ProductService = {
         "Content-Type": "multipart/form-data",
       },
     });
+  },
+  deleteProduct: async (productId: string) => {
+    return await api.delete(`/products/${productId}/`);
   },
 };
 

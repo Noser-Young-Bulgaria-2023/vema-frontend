@@ -49,12 +49,6 @@ const backgroundGradient: SxProps = {
   transition: "opacity 0.5s",
 };
 
-const addIcon: SxProps = {
-  fontSize: "5rem",
-  transition: "color 0.5s",
-  zIndex: 10,
-};
-
 const productImage: CSSProperties = {
   height: "200px",
   width: "200px",
@@ -70,6 +64,10 @@ const editButton: SxProps = {
   borderRadius: "0px",
 };
 
+const deleteButton: SxProps = {
+  borderRadius: "0px",
+};
+
 const overlay: SxProps = {
   visibility: "hidden",
   transition: "all 0.5s",
@@ -81,9 +79,9 @@ export default {
   content,
   hoverText,
   backgroundGradient,
-  addIcon,
   productImage,
   editButton,
   overlay,
   productImageContainer,
+  deleteButton,
 };
