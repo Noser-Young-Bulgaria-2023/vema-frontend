@@ -21,7 +21,7 @@ const VendingPage = () => {
 
   return (
     <Box sx={VendingPageStyles.page}>
-      <Typography variant="h1">VEMA</Typography>
+      <Image style={ VendingPAgeStyles.logo } source={ require("/public/images/vema-logo.png") } alt="logo" />
       <ProductSelectionBox
         productList={productList}
         openNewProduct={handleNewProduct}

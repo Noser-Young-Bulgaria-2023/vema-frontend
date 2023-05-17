@@ -7,4 +7,8 @@ const page: SxProps = {
   alignItems: "center",
 };
 
-export default { page };
+const logo: SxProps = {
+    margin: "12",
+};
+
+export default { page, logo };
