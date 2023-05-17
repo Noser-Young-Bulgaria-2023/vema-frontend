@@ -7,4 +7,6 @@ const page: SxProps = {
   alignItems: "center",
 };
 
-export default { page };
+export default {
+  page,
+};
