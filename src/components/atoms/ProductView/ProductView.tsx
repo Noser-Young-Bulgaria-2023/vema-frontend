@@ -1,15 +1,23 @@
 import { Box, Grid, IconButton, Paper, Typography } from "@mui/material";
 import { Product } from "../../../types/models/Product.model";
 import ProductViewStyles from "./ProductViewStyles";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import ProductService from "../../../services/ProductService";
 import AddIcon from "@mui/icons-material/Add";
 import { useEffect, useMemo, useState } from "react";
 
 type ProductViewProps = {
-  product?: Product;
-  openNewProduct: () => void;
+  product: Product;
+  openProduct: (product: Product | undefined) => void;
+  setProductList: (productList: Product[]) => void;
 };
 
-const ProductView = ({ product, openNewProduct }: ProductViewProps) => {
+const ProductView = ({
+  product,
+  openProduct,
+  setProductList,
+}: ProductViewProps) => {
   const [isProductEmpty, setProductEmpty] = useState(product.amount === 0);
 
   useMemo(() => {
@@ -27,7 +35,7 @@ const ProductView = ({ product, openNewProduct }: ProductViewProps) => {
           position: isProductEmpty ? "relative" : undefined,
         }}
         square
-        onClick={isProductEmpty ? openNewProduct : undefined}
+        onClick={isProductEmpty ? openProduct : undefined}
       >
         <Box
           className="backgroundGradient"
@@ -35,29 +43,59 @@ const ProductView = ({ product, openNewProduct }: ProductViewProps) => {
         ></Box>
         {product && (
           <Box sx={ProductViewStyles.content}>
-            <img
-              src={product.imagePath}
-              alt={product.name}
-              style={ProductViewStyles.image}
-            />
-            <Typography className="hoverText" sx={ProductViewStyles.hoverText}>
-              {product.name}
-            </Typography>
-            <Typography
-              className="hoverText"
+            <Box
               sx={{
-                ...ProductViewStyles.hoverText,
-                ...ProductViewStyles.hoverPrice,
+                width: "100%",
+                display: "flex",
+                justifyContent: "flex-end",
               }}
             >
-              {product.price} BGN
+              <IconButton
+                onClick={() => openProduct(product)}
+                sx={{
+                  ...ProductViewStyles.overlay,
+                  ...ProductViewStyles.editButton,
+                }}
+                className="overlay"
+              >
+                <EditIcon />
+              </IconButton>
+              <IconButton
+                onClick={() => {
+                  if (!product.id) return;
+                  ProductService.deleteProduct(product.id).then(() => {
+                    ProductService.getAllProducts().then(setProductList);
+                  });
+                }}
+                sx={{
+                  ...ProductViewStyles.overlay,
+                  ...ProductViewStyles.deleteButton,
+                }}
+                className="overlay"
+              >
+                <DeleteIcon />
+              </IconButton>
+            </Box>
+            <Box
+              className="productImage"
+              sx={{ ...ProductViewStyles.productImageContainer }}
+            >
+              <img
+                src={`data:image/png;base64,${product.image?.data}`}
+                alt={product.name}
+                style={ProductViewStyles.productImage}
+              />
+            </Box>
+            <Typography
+              sx={{
+                ...ProductViewStyles.hoverText,
+                ...ProductViewStyles.overlay,
+              }}
+              className="overlay"
+            >
+              {product.name}
             </Typography>
           </Box>
-        )}
-        {!product && (
-          <IconButton onClick={openNewProduct}>
-            <AddIcon className="addIcon" sx={ProductViewStyles.addIcon} />
-          </IconButton>
         )}
       </Paper>
     </Grid>

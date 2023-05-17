@@ -2,15 +2,20 @@ import { Product } from "../../../types/models/Product.model";
 import ProductView from "../../atoms/ProductView/ProductView";
 import { Box, Grid, Typography } from "@mui/material";
 import ProductSelectionBoxStyles from "./ProductSelectionBoxStyles";
+import AddProductView from "../../atoms/AddProductView/AddProductView";
 
 type ProductSelectionBoxProps = {
   productList: Product[];
-  openNewProduct: () => void;
+  openEditProductDialog: (product: Product | undefined) => void;
+  openAddProductDialog: (isOpen: boolean) => void;
+  setProductList: (productList: Product[]) => void;
 };
 
 const ProductSelectionBox = ({
   productList,
-  openNewProduct,
+  openEditProductDialog,
+  openAddProductDialog,
+  setProductList,
 }: ProductSelectionBoxProps) => {
   return (
     <>
@@ -22,10 +27,12 @@ const ProductSelectionBox = ({
               <ProductView
                 key={index}
                 product={product}
-                openNewProduct={openNewProduct}
+                openProduct={openEditProductDialog}
+                setProductList={setProductList}
               />
             );
           })}
+          <AddProductView openAddProductViewDialog={openAddProductDialog} />
         </Grid>
       </Box>
     </>

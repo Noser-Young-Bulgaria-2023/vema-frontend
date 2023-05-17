@@ -5,7 +5,7 @@ const paper: SxProps = {
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
-  justifyContent: "center",
+  justifyContent: "space-between",
   width: "350px",
   height: "350px",
   "&:hover": {
@@ -21,6 +21,14 @@ const paper: SxProps = {
   "&:hover .addIcon": {
     color: "white",
   },
+  "&:hover .overlay": {
+    visibility: "visible",
+    opacity: 1,
+  },
+  "&:hover .productImage": {
+    paddingBottom: "10px",
+  },
+  transition: "all 0.5s",
 };
 
 const content: SxProps = {
@@ -28,6 +36,9 @@ const content: SxProps = {
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
+  width: "100%",
+  height: "100%",
+  justifyContent: "space-between",
 };
 
 const hoverText: SxProps = {
@@ -55,16 +66,29 @@ const backgroundGradient: SxProps = {
   transition: "opacity 0.5s",
 };
 
-const addIcon: SxProps = {
-  fontSize: "5rem",
-  transition: "color 0.5s",
-  zIndex: 10,
-};
-
-const image: CSSProperties = {
+const productImage: CSSProperties = {
   height: "200px",
   width: "200px",
   objectFit: "contain",
+};
+
+const productImageContainer: SxProps = {
+  paddingBottom: "0px",
+  transition: "all 0.2s",
+};
+
+const editButton: SxProps = {
+  borderRadius: "0px",
+};
+
+const deleteButton: SxProps = {
+  borderRadius: "0px",
+};
+
+const overlay: SxProps = {
+  visibility: "hidden",
+  transition: "all 0.5s",
+  opacity: 0,
 };
 
 export default {
@@ -73,6 +97,9 @@ export default {
   hoverText,
   hoverPrice,
   backgroundGradient,
-  addIcon,
-  image,
+  productImage,
+  editButton,
+  overlay,
+  productImageContainer,
+  deleteButton,
 };
