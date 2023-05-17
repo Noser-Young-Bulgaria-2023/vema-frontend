@@ -10,12 +10,14 @@ type ProductViewProps = {
   product: Product;
   openProduct: (product: Product | undefined) => void;
   setProductList: (productList: Product[]) => void;
+  buyProduct: (product: Product) => void;
 };
 
 const ProductView = ({
   product,
   openProduct,
   setProductList,
+  buyProduct,
 }: ProductViewProps) => {
   const [isProductEmpty, setProductEmpty] = useState(product.amount === 0);
 
@@ -28,12 +30,16 @@ const ProductView = ({
       <Paper
         sx={{
           ...ProductViewStyles.paper,
+          ...ProductViewStyles.paperOnHover,
           opacity: isProductEmpty ? 0.3 : 1,
-          pointerEvents: isProductEmpty ? "none" : undefined,
-          zIndex: isProductEmpty ? -1 : 10,
+          zIndex: isProductEmpty ? 0 : 10,
           position: isProductEmpty ? "relative" : undefined,
         }}
+        variant="outlined"
         square
+        onClick={() => {
+          buyProduct(product);
+        }}
       >
         <Box
           className="backgroundGradient"
@@ -41,13 +47,7 @@ const ProductView = ({
         ></Box>
         {product && (
           <Box sx={ProductViewStyles.content}>
-            <Box
-              sx={{
-                width: "100%",
-                display: "flex",
-                justifyContent: "flex-end",
-              }}
-            >
+            <Box sx={ProductViewStyles.editProductBox}>
               <IconButton
                 onClick={() => openProduct(product)}
                 sx={{
@@ -92,6 +92,16 @@ const ProductView = ({
               className="overlay"
             >
               {product.name}
+            </Typography>
+            <Typography
+              sx={{
+                ...ProductViewStyles.hoverText,
+                ...ProductViewStyles.hoverPrice,
+                ...ProductViewStyles.overlay,
+              }}
+              className="overlay"
+            >
+              {product.price.toPrecision(3)} BGN
             </Typography>
           </Box>
         )}
