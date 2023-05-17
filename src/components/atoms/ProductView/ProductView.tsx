@@ -4,8 +4,7 @@ import ProductViewStyles from "./ProductViewStyles";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ProductService from "../../../services/ProductService";
-import AddIcon from "@mui/icons-material/Add";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 
 type ProductViewProps = {
   product: Product;
@@ -35,7 +34,6 @@ const ProductView = ({
           position: isProductEmpty ? "relative" : undefined,
         }}
         square
-        onClick={isProductEmpty ? openProduct : undefined}
       >
         <Box
           className="backgroundGradient"
