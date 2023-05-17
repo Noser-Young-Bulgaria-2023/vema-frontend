@@ -8,8 +8,18 @@ const paper: SxProps = {
   justifyContent: "center",
   width: "350px",
   height: "350px",
+  "&:hover": {
+    transform: "translateY(-10%) scale(1.2)",
+    zIndex: 5,
+  },
   "&:hover .backgroundGradient": {
     opacity: 1,
+  },
+  "&:hover .hoverText": {
+    display: "block",
+  },
+  "&:hover .addIcon": {
+    color: "white",
   },
 };
 
@@ -21,10 +31,16 @@ const content: SxProps = {
 };
 
 const hoverText: SxProps = {
+  display: "none",
   textAlign: "center",
-  padding: 1,
-  fontSize: "2.5rem",
+  paddingTop: 1,
+  fontSize: "1.5rem",
   color: "white",
+};
+
+const hoverPrice: SxProps = {
+  padding: 0,
+  paddingBottom: 1,
 };
 
 const backgroundGradient: SxProps = {
@@ -55,6 +71,7 @@ export default {
   paper,
   content,
   hoverText,
+  hoverPrice,
   backgroundGradient,
   addIcon,
   image,
