@@ -4,38 +4,54 @@ import ProductViewStyles from "./ProductViewStyles";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ProductService from "../../../services/ProductService";
+import { useMemo, useState } from "react";
 
 type ProductViewProps = {
   product: Product;
   openProduct: (product: Product | undefined) => void;
   setProductList: (productList: Product[]) => void;
+  buyProduct: (product: Product) => void;
 };
 
-const ProductView = (props: ProductViewProps) => {
+const ProductView = ({
+  product,
+  openProduct,
+  setProductList,
+  buyProduct,
+}: ProductViewProps) => {
+  const [isProductEmpty, setProductEmpty] = useState(product.amount === 0);
+
+  useMemo(() => {
+    setProductEmpty(product.amount === 0);
+  }, [product.amount]);
+
   return (
     <Grid item>
       <Paper
         sx={{
           ...ProductViewStyles.paper,
+          ...ProductViewStyles.paperOnHover,
+          opacity: isProductEmpty ? 0.3 : 1,
+          position: isProductEmpty ? "relative" : undefined,
         }}
         variant="outlined"
         square
+        onClick={() => {
+          !isProductEmpty && buyProduct(product);
+        }}
       >
         <Box
           className="backgroundGradient"
           sx={ProductViewStyles.backgroundGradient}
         ></Box>
-        {props.product && (
+        {product && (
           <Box sx={ProductViewStyles.content}>
-            <Box
-              sx={{
-                width: "100%",
-                display: "flex",
-                justifyContent: "flex-end",
-              }}
-            >
+            <Box sx={ProductViewStyles.editProductBox}>
               <IconButton
-                onClick={() => props.openProduct(props.product)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  openProduct(product);
+                }}
                 sx={{
                   ...ProductViewStyles.overlay,
                   ...ProductViewStyles.editButton,
@@ -45,10 +61,11 @@ const ProductView = (props: ProductViewProps) => {
                 <EditIcon />
               </IconButton>
               <IconButton
-                onClick={() => {
-                  if (!props.product.id) return;
-                  ProductService.deleteProduct(props.product.id).then(() => {
-                    ProductService.getAllProducts().then(props.setProductList);
+                onClick={(e) => {
+                  e.stopPropagation();
+                  if (!product.id) return;
+                  ProductService.deleteProduct(product.id).then(() => {
+                    ProductService.getAllProducts().then(setProductList);
                   });
                 }}
                 sx={{
@@ -65,8 +82,8 @@ const ProductView = (props: ProductViewProps) => {
               sx={{ ...ProductViewStyles.productImageContainer }}
             >
               <img
-                src={`data:image/png;base64,${props.product.image?.data}`}
-                alt={props.product.name}
+                src={`data:image/png;base64,${product.image?.data}`}
+                alt={product.name}
                 style={ProductViewStyles.productImage}
               />
             </Box>
@@ -77,7 +94,17 @@ const ProductView = (props: ProductViewProps) => {
               }}
               className="overlay"
             >
-              {props.product.name}
+              {product.name}
+            </Typography>
+            <Typography
+              sx={{
+                ...ProductViewStyles.hoverText,
+                ...ProductViewStyles.hoverPrice,
+                ...ProductViewStyles.overlay,
+              }}
+              className="overlay"
+            >
+              {product.price.toFixed(2)} BGN
             </Typography>
           </Box>
         )}
