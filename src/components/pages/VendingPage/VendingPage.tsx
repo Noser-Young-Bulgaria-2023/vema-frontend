@@ -15,6 +15,8 @@ import { Coin } from "../../../types/models/Coin.model";
 import logo from "./../../../assets/images/vema-logo.png";
 import ReturnCoinsDialog from "../../organisms/ReturnCoinsDialog/ReturnCoinsDialog";
 
+const CASHREGISTER_ID = "0";
+
 const VendingPage = () => {
   const [productList, setProductList] = useState<Product[]>([]);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState<boolean>(false);
@@ -34,15 +36,21 @@ const VendingPage = () => {
       .catch(() => {
         setProductList(testProducts);
       });
-    if (!cashRegister) {
-      CashRegisterService.create({
-        id: "0",
-        coinsInDeposit: [],
-        coinsInInternalStorage: [],
-      }).then((res) => {
+    CashRegisterService.getById(CASHREGISTER_ID)
+      .then((res) => {
         setCashRegister(res.data);
+      })
+      .catch(() => {
+        if (!cashRegister) {
+          CashRegisterService.create({
+            id: "0",
+            coinsInDeposit: [],
+            coinsInInternalStorage: [],
+          }).then((res) => {
+            setCashRegister(res.data);
+          });
+        }
       });
-    }
   }, []);
 
   const handleProductPanel = (product?: Product) => {
