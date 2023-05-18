@@ -80,6 +80,11 @@ const VendingPage = () => {
 
   return (
     <Box sx={VendingPageStyles.page}>
+      <Image style={ VendingPAgeStyles.logo } source={ require("/public/images/vema-logo.png") } alt="logo" />
+      <ProductSelectionBox
+        productList={productList}
+        openNewProduct={handleNewProduct}
+
       <AddProductDialog
         isOpen={isAddDialogOpen}
         setIsOpen={setIsAddDialogOpen}
