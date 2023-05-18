@@ -7,8 +7,12 @@ const dialog: SxProps = {
   alignItems: "center",
 };
 
+const product: SxProps = {
+  pointerEvents: "none",
+};
+
 const depositDisplay: SxProps = {
   position: "unset",
 };
 
-export default { dialog, depositDisplay };
+export default { dialog, depositDisplay, product };

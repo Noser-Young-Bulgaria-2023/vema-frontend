@@ -32,13 +32,12 @@ const ProductView = ({
           ...ProductViewStyles.paper,
           ...ProductViewStyles.paperOnHover,
           opacity: isProductEmpty ? 0.3 : 1,
-          zIndex: isProductEmpty ? 0 : 10,
           position: isProductEmpty ? "relative" : undefined,
         }}
         variant="outlined"
         square
         onClick={() => {
-          buyProduct(product);
+          !isProductEmpty && buyProduct(product);
         }}
       >
         <Box
@@ -49,7 +48,10 @@ const ProductView = ({
           <Box sx={ProductViewStyles.content}>
             <Box sx={ProductViewStyles.editProductBox}>
               <IconButton
-                onClick={() => openProduct(product)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  openProduct(product);
+                }}
                 sx={{
                   ...ProductViewStyles.overlay,
                   ...ProductViewStyles.editButton,
@@ -59,7 +61,8 @@ const ProductView = ({
                 <EditIcon />
               </IconButton>
               <IconButton
-                onClick={() => {
+                onClick={(e) => {
+                  e.stopPropagation();
                   if (!product.id) return;
                   ProductService.deleteProduct(product.id).then(() => {
                     ProductService.getAllProducts().then(setProductList);
@@ -101,7 +104,7 @@ const ProductView = ({
               }}
               className="overlay"
             >
-              {product.price.toPrecision(3)} BGN
+              {product.price.toFixed(2)} BGN
             </Typography>
           </Box>
         )}

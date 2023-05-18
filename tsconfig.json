@@ -3,7 +3,6 @@
     "jsx": "react-jsx",
     "esModuleInterop": true,
     "moduleResolution": "node",
-    "resolveJsonModule": true
     "resolveJsonModule": true,
     "allowJs": false,
     "strict": true

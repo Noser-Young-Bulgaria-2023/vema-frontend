@@ -1,7 +1,7 @@
 import { useLayoutEffect, useState } from "react";
 import { Product } from "../../../types/models/Product.model";
 import ProductSelectionBox from "../../organisms/ProductSelectionBox/ProductSelectionBox";
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import VendingPageStyles from "./VendingPageStyles";
 import ProductService from "../../../services/ProductService";
 import EditProductDialog from "../../organisms/EditProductDialog/EditProductDialog";
@@ -12,6 +12,8 @@ import { CashRegister } from "../../../types/models/CashRegister.model";
 import CashRegisterService from "../../../services/CashRegisterService";
 import BuyProductDialog from "../../organisms/BuyProductDialog/BuyProductDialog";
 import { Coin } from "../../../types/models/Coin.model";
+import logo from "./../../../assets/images/vema-logo.png";
+import ReturnCoinsDialog from "../../organisms/ReturnCoinsDialog/ReturnCoinsDialog";
 
 const VendingPage = () => {
   const [productList, setProductList] = useState<Product[]>([]);
@@ -22,6 +24,7 @@ const VendingPage = () => {
   const [openBuyMenu, setOpenBuyMenu] = useState(false);
   const [currentProduct, setCurrentProduct] = useState<Product>();
   const [isCoinInserting, setCoinInserting] = useState(false);
+  const [isReturnCoinsDialogOpen, setIsReturnCoinsDialogOpen] = useState(false);
 
   useLayoutEffect(() => {
     ProductService.getAllProducts()
@@ -50,7 +53,20 @@ const VendingPage = () => {
   };
 
   const handleReturnDeposit = () => {
-    return cashRegister ? cashRegister.coinsInDeposit : [];
+    setIsReturnCoinsDialogOpen(true);
+    setOpenBuyMenu(false);
+  };
+
+  const handleCloseReturnDeposit = () => {
+    if (!cashRegister) return;
+    const newCashRegister: CashRegister = {
+      ...cashRegister,
+      coinsInDeposit: [],
+    };
+    CashRegisterService.updateById(newCashRegister).then((res) => {
+      setCashRegister(res.data);
+    });
+    setIsReturnCoinsDialogOpen(false);
   };
 
   const handleBuyProduct = (product: Product) => {
@@ -80,11 +96,6 @@ const VendingPage = () => {
 
   return (
     <Box sx={VendingPageStyles.page}>
-      <Image style={ VendingPAgeStyles.logo } source={ require("/public/images/vema-logo.png") } alt="logo" />
-      <ProductSelectionBox
-        productList={productList}
-        openNewProduct={handleNewProduct}
-
       <AddProductDialog
         isOpen={isAddDialogOpen}
         setIsOpen={setIsAddDialogOpen}
@@ -112,7 +123,15 @@ const VendingPage = () => {
         />
       )}
 
-      <Typography variant="h1">VEMA</Typography>
+      {cashRegister && (
+        <ReturnCoinsDialog
+          open={isReturnCoinsDialogOpen}
+          closeDialog={handleCloseReturnDeposit}
+          returnedCoins={cashRegister.coinsInDeposit}
+        />
+      )}
+
+      <img src={logo} alt="logo" />
       <Box sx={VendingPageStyles.pageContent}>
         <ProductSelectionBox
           setProductList={setProductList}

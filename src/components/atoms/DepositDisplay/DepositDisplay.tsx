@@ -5,7 +5,7 @@ import DepositDisplayStyles from "./DepositDisplayStyles";
 
 type DepositDisplayProps = {
   coinsInDeposit: Coin[];
-  returnCoinsInDeposit: () => Coin[];
+  returnCoinsInDeposit: () => void;
   sx?: SxProps;
 };
 
@@ -19,14 +19,14 @@ const DepositDisplay = ({
       return 0;
     }
     let value = 0;
-    coins.forEach((coin) => (value += Number(coin.coinValue.toPrecision(3))));
+    coins.forEach((coin) => (value += Number(coin.coinValue)));
     return value;
   };
 
   return (
     <Paper sx={{ ...DepositDisplayStyles.paper, ...sx }}>
       <Typography sx={DepositDisplayStyles.text}>
-        Deposit: {calculateDepositValue(coinsInDeposit).toPrecision(3)} BGN
+        Deposit: {calculateDepositValue(coinsInDeposit).toFixed(2)} BGN
       </Typography>
       <Button
         variant="contained"

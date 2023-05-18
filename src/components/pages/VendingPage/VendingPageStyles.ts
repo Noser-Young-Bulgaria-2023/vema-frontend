@@ -1,4 +1,5 @@
 import { SxProps } from "@mui/material";
+import { CSSProperties } from "react";
 
 const page: SxProps = {
   width: "100vw",
@@ -14,4 +15,6 @@ const pageContent: SxProps = {
   alignItems: "center",
 };
 
-export default { page, pageContent };
+const logo: CSSProperties = {};
+
+export default { page, pageContent, logo };
