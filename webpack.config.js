@@ -1,59 +1,59 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const webpack = require('webpack');
-const dotenv = require('dotenv');
+const webpack = require("webpack");
+const dotenv = require("dotenv");
 
-dotenv.config({path: './.env'});
+dotenv.config({ path: "./.env" });
 
 module.exports = {
-    entry: "./src/index.tsx",
-    output: {
-        filename: "main.js",
-        path: path.resolve(__dirname, "build"),
+  entry: "./src/index.tsx",
+  output: {
+    filename: "main.js",
+    path: path.resolve(__dirname, "build"),
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: path.join(__dirname, "public", "index.html"),
+    }),
+    new webpack.DefinePlugin({
+      "process.env": JSON.stringify(process.env),
+    }),
+  ],
+  devServer: {
+    static: {
+      directory: path.join(__dirname, "build"),
     },
-    plugins: [
-        new HtmlWebpackPlugin({
-            template: path.join(__dirname, "public", "index.html"),
-        }),
-        new webpack.DefinePlugin({
-            "process.env": JSON.stringify(process.env)
-        })
-    ],
-    devServer: {
-        static: {
-            directory: path.join(__dirname, "build"),
-        },
-        port: 3000,
-    },
+    port: 3000,
+  },
 
-    module: {
-        rules: [
-            // `js` and `jsx` files are parsed using `babel`
-            {
-                test: /\.(js|jsx)$/,
-                exclude: /node_modules/,
-                use: ["babel-loader"],
-            },
-            // `ts` and `tsx` files are parsed using `ts-loader`
-            {
-                test: /\.(ts|tsx)$/,
-                loader: "ts-loader",
-            },
-            {
-                test: /\.css$/i,
-                use: ["style-loader", "css-loader"],
-            },
-            {
-                test: /\.(png|svg|jpg|jpeg|gif)$/i,
-                type: "asset/resource",
-            },
-            {
-                test: /\.(woff|woff2|eot|ttf|otf)$/i,
-                type: "asset/resource",
-            },
-        ],
-    },
-    resolve: {
-        extensions: ["*", ".js", ".jsx", ".ts", ".tsx"],
-    },
+  module: {
+    rules: [
+      // `js` and `jsx` files are parsed using `babel`
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: ["babel-loader"],
+      },
+      // `ts` and `tsx` files are parsed using `ts-loader`
+      {
+        test: /\.(ts|tsx)$/,
+        loader: "ts-loader",
+      },
+      {
+        test: /\.css$/i,
+        use: ["style-loader", "css-loader"],
+      },
+      {
+        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        type: "asset/resource",
+      },
+      {
+        test: /\.(woff|woff2|eot|ttf|otf)$/i,
+        type: "asset/resource",
+      },
+    ],
+  },
+  resolve: {
+    extensions: ["*", ".js", ".jsx", ".ts", ".tsx"],
+  },
 };
