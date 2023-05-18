@@ -1,5 +1,5 @@
 import { Coin } from "../../../types/models/Coin.model";
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { CoinType } from "../../molecules/InsertCoinBox/InsertCoinBox";
 import CoinDisplayStyles from "./CoinDisplayStyles";
 

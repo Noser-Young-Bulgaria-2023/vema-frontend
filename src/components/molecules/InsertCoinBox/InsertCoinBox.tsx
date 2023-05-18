@@ -20,9 +20,8 @@ const InsertCoinBox = ({ handleInsertCoin }: InsertCoinBoxProps) => {
         <Typography variant="h4">Insert Coins:</Typography>
       </Grid>
       {COIN_TYPES.map((coinType: CoinType, index) => (
-        <Grid item md={2} xs={5}>
+        <Grid item key={index} md={2} xs={5}>
           <CoinDisplay
-            key={index}
             coinType={coinType}
             handleInsertCoin={handleInsertCoin}
           />
