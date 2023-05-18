@@ -14,7 +14,11 @@ const text: SxProps = {
 };
 
 const button: SxProps = {
-  color: "white",
+  backgroundColor: "white",
+  color: "black",
+  ":hover": {
+    backgroundColor: "#66CE91",
+  },
 };
 
 export default { paper, text, button };

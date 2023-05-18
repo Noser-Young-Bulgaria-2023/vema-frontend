@@ -10,14 +10,18 @@ import testProducts from "../../../utility/testProductList.json";
 import DepositDisplay from "../../atoms/DepositDisplay/DepositDisplay";
 import { CashRegister } from "../../../types/models/CashRegister.model";
 import CashRegisterService from "../../../services/CashRegisterService";
-import testCashRegister from "../../../utility/testCashRegister.json";
+import BuyProductDialog from "../../organisms/BuyProductDialog/BuyProductDialog";
+import { Coin } from "../../../types/models/Coin.model";
 
 const VendingPage = () => {
   const [productList, setProductList] = useState<Product[]>([]);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState<boolean>(false);
-  const [cashRegister, setCashRegister] = useState<CashRegister | undefined>();
+  const [cashRegister, setCashRegister] = useState<CashRegister>();
   const [isAddDialogOpen, setIsAddDialogOpen] = useState<boolean>(false);
-  const [activeProduct, setActiveProduct] = useState<Product | undefined>();
+  const [activeProduct, setActiveProduct] = useState<Product>();
+  const [openBuyMenu, setOpenBuyMenu] = useState(false);
+  const [currentProduct, setCurrentProduct] = useState<Product>();
+  const [isCoinInserting, setCoinInserting] = useState(false);
 
   useLayoutEffect(() => {
     ProductService.getAllProducts()
@@ -27,13 +31,15 @@ const VendingPage = () => {
       .catch(() => {
         setProductList(testProducts);
       });
-    CashRegisterService.getAll()
-      .then((res) => {
-        res.data !== null && setCashRegister(res.data[0]);
-      })
-      .catch(() => {
-        setCashRegister(testCashRegister);
+    if (!cashRegister) {
+      CashRegisterService.create({
+        id: "0",
+        coinsInDeposit: [],
+        coinsInInternalStorage: [],
+      }).then((res) => {
+        setCashRegister(res.data);
       });
+    }
   }, []);
 
   const handleProductPanel = (product?: Product) => {
@@ -45,6 +51,31 @@ const VendingPage = () => {
 
   const handleReturnDeposit = () => {
     return cashRegister ? cashRegister.coinsInDeposit : [];
+  };
+
+  const handleBuyProduct = (product: Product) => {
+    setCurrentProduct(product);
+    setOpenBuyMenu(true);
+  };
+
+  const handleCloseBuyMenu = () => {
+    setOpenBuyMenu(false);
+    setCurrentProduct(undefined);
+  };
+
+  const handleInsertCoin = (coin: Coin) => {
+    if (!cashRegister) {
+      return;
+    }
+    if (!isCoinInserting) {
+      setCoinInserting(true);
+      CashRegisterService.insertCoin(cashRegister.id, coin)
+        .then((res) => {
+          setCoinInserting(false);
+          setCashRegister(res.data);
+        })
+        .catch(() => setCoinInserting(false));
+    }
   };
 
   return (
@@ -61,7 +92,15 @@ const VendingPage = () => {
         setProductList={setProductList}
         activeProduct={activeProduct}
       />
-      {cashRegister !== null && (
+      <BuyProductDialog
+        open={openBuyMenu}
+        closeDialog={handleCloseBuyMenu}
+        product={currentProduct}
+        cashRegister={cashRegister}
+        handleInsertCoin={handleInsertCoin}
+        handleReturnDeposit={handleReturnDeposit}
+      />
+      {cashRegister !== null && !openBuyMenu && (
         <DepositDisplay
           coinsInDeposit={cashRegister ? cashRegister.coinsInDeposit : []}
           returnCoinsInDeposit={handleReturnDeposit}
@@ -70,17 +109,13 @@ const VendingPage = () => {
 
       <Typography variant="h1">VEMA</Typography>
       <Box sx={VendingPageStyles.pageContent}>
-        {productList.length !== 0 && (
-          <ProductSelectionBox
-            setProductList={setProductList}
-            productList={productList}
-            openEditProductDialog={handleProductPanel}
-            openAddProductDialog={setIsAddDialogOpen}
-          />
-        )}
-        {productList.length === 0 && (
-          <Typography variant="h2">No products available</Typography>
-        )}
+        <ProductSelectionBox
+          setProductList={setProductList}
+          productList={productList}
+          openEditProductDialog={handleProductPanel}
+          openAddProductDialog={setIsAddDialogOpen}
+          handleBuyProduct={handleBuyProduct}
+        />
       </Box>
     </Box>
   );

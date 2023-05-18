@@ -1,6 +1,6 @@
 export type Coin = {
-  id: string;
-  value: CoinValueEnum;
+  id?: string;
+  coinValue: CoinValueEnum;
 };
 
 export enum CoinValueEnum {
